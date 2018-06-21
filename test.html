@@ -133,7 +133,7 @@
 
             this.mesh = new THREE.Object3D();
 
-            var geomCockpit = new THREE.BoxGeometry(60, 50, 50, 1, 1, 1);
+            var geomCockpit = new THREE.BoxGeometry(200, 50, 50, 1, 1, 1);
             var matCockpit = new THREE.MeshPhongMaterial({
                 color: Colors.red,
                 shading: THREE.FlatShading
@@ -150,25 +150,25 @@
                 shading: THREE.FlatShading
             });
             var engine = new THREE.Mesh(geomEngine, matEngine);
-            engine.position.x = 40;
+            engine.position.x = 110;
             engine.castShadow = true;
             engine.receiveShadow = true;
             this.mesh.add(engine);
 
             // Создаем хвост
-            var geomTailPlane = new THREE.BoxGeometry(15, 20, 5, 1, 1, 1);
+            var geomTailPlane = new THREE.BoxGeometry(25, 40, 5, 1, 1, 1);
             var matTailPlane = new THREE.MeshPhongMaterial({
                 color: Colors.red,
                 shading: THREE.FlatShading
             });
             var tailPlane = new THREE.Mesh(geomTailPlane, matTailPlane);
-            tailPlane.position.set(-35, 25, 0);
+            tailPlane.position.set(-100, 25, 0);
             tailPlane.castShadow = true;
             tailPlane.receiveShadow = true;
             this.mesh.add(tailPlane);
 
             // Создаем крыло
-            var geomSideWing = new THREE.BoxGeometry(40, 8, 150, 1, 1, 1);
+            var geomSideWing = new THREE.BoxGeometry(50, 8, 300, 1, 1, 1);
             var matSideWing = new THREE.MeshPhongMaterial({
                 color: Colors.red,
                 shading: THREE.FlatShading
@@ -187,6 +187,8 @@
             this.propeller = new THREE.Mesh(geomPropeller, matPropeller);
             this.propeller.castShadow = true;
             this.propeller.receiveShadow = true;
+            this.propeller.position.x = 170;
+
 
             // Создаем лопасть
             var geomBlade = new THREE.BoxGeometry(1, 100, 20, 1, 1, 1);
@@ -200,7 +202,7 @@
             blade.castShadow = true;
             blade.receiveShadow = true;
             this.propeller.add(blade);
-            this.propeller.position.set(50, 0, 0);
+            this.propeller.position.set(115, 0, 0);
             this.mesh.add(this.propeller);
         };
 
