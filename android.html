@@ -160,27 +160,27 @@
             var geometry = new THREE.BoxGeometry(3, 3, 3);
             var cubeMaterials = [
                 new THREE.MeshBasicMaterial({
-                    map: new THREE.TextureLoader().load('img/metal.jpg'),
+                    map: new THREE.TextureLoader().load('img/metal.jpeg'),
                     side: THREE.DoubleSide
                 }), //right
                 new THREE.MeshBasicMaterial({
-                    map: new THREE.TextureLoader().load('img/metal.jpg'),
+                    map: new THREE.TextureLoader().load('img/metal.jpeg'),
                     side: THREE.DoubleSide
                 }), //top
                 new THREE.MeshBasicMaterial({
-                    map: new THREE.TextureLoader().load('img/metal.jpg'),
+                    map: new THREE.TextureLoader().load('img/metal.jpeg'),
                     side: THREE.DoubleSide
                 }), //left
                 new THREE.MeshBasicMaterial({
-                    map: new THREE.TextureLoader().load('img/metal.jpg'),
+                    map: new THREE.TextureLoader().load('img/metal.jpeg'),
                     side: THREE.DoubleSide
                 }), //bottom
                 new THREE.MeshBasicMaterial({
-                    map: new THREE.TextureLoader().load('img/metal.jpg'),
+                    map: new THREE.TextureLoader().load('img/metal.jpeg'),
                     side: THREE.DoubleSide
                 }), //front
                 new THREE.MeshBasicMaterial({
-                    map: new THREE.TextureLoader().load('img/metal.jpg'),
+                    map: new THREE.TextureLoader().load('img/metal.jpeg'),
                     side: THREE.DoubleSide
                 }) //back
             ];
@@ -256,6 +256,82 @@
             cylinder.rotation.y = Math.PI / 4;
             cylinder.position.set(0, 4.38, 0);
 
+            var geometry = new THREE.BoxGeometry(0.1, 0.5, 0.05); //lefteye
+            var material = new THREE.MeshBasicMaterial({
+                color: 0xffffff
+            });
+            var cube = new THREE.Mesh(geometry, material);
+            cube.position.set(-3 / 4, 4.35, 1.33);
+            cube.rotation.z = Math.PI / 2;
+            cube.rotation.x = -Math.PI / 6;
+            this.mesh.add(cube);
+
+            var geometry = new THREE.BoxGeometry(0.1, 0.5, 0.05); //righteye
+            var material = new THREE.MeshBasicMaterial({
+                color: 0x000000
+            });
+            var cube = new THREE.Mesh(geometry, material);
+            cube.position.set(3 / 4, 4.35, 1.33);
+            cube.rotation.z = Math.PI / 2;
+            cube.rotation.x = -Math.PI / 6;
+            this.mesh.add(cube);
+
+            var geometry = new THREE.BoxGeometry(0.1, 0.5, 0.05); //continue
+            var material = new THREE.MeshBasicMaterial({
+                color: 0x000000
+            });
+            var cube = new THREE.Mesh(geometry, material);
+            cube.position.set(3 / 4, 4.35, 1.33);
+            cube.rotation.z = Math.PI;
+            cube.rotation.x = -Math.PI / 6;
+            this.mesh.add(cube);
+
+            var geometry = new THREE.SphereBufferGeometry(0.9, 8, 8, 0, 2 * Math.PI, 0, 0.5 * Math.PI);
+            var material = new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load('img/hand.jpeg')
+            });
+            material.side = THREE.DoubleSide;
+            mesh = new THREE.Mesh(geometry, material);
+            mesh.overdraw = true;
+            mesh.castShadow = true;
+            this.mesh.add(mesh);
+            mesh.position.set(-1.5, 3, 0);
+            mesh.rotation.z = Math.PI / 2;
+            //righthand
+            mesh = new THREE.Mesh(geometry, material);
+            this.mesh.add(mesh);
+            mesh.position.set(1.5, 3, 0);
+            mesh.rotation.z = -Math.PI / 2;
+
+            var geometry = new THREE.SphereGeometry(0.30, 16, 16); //rightAntena
+            var material = new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load('img/ball.jpg')
+            });
+            var sphere = new THREE.Mesh(geometry, material);
+            this.mesh.add(sphere);
+            sphere.position.set(3 / 4, 5.5, 0);
+
+            var sphere = new THREE.Mesh(geometry, material); //leftAntena
+            this.mesh.add(sphere);
+            sphere.position.set(-3 / 4, 5.5, 0);
+
+            var geometry = new THREE.CylinderGeometry(0.05, 0.05, 1, 100);
+            var material = new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load('img/TV.jpg')
+            });
+            var cylinder = new THREE.Mesh(geometry, material);
+            this.mesh.add(cylinder);
+            cylinder.position.set(-0.37, 5.1, 0);
+            cylinder.rotation.z = Math.PI / 4;
+
+            var geometry = new THREE.CylinderGeometry(0.05, 0.05, 1, 100);
+            var material = new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load('img/TV.jpg')
+            });
+            var cylinder = new THREE.Mesh(geometry, material);
+            this.mesh.add(cylinder);
+            cylinder.position.set(0.37, 5.1, 0);
+            cylinder.rotation.z = -Math.PI / 4;
             //this.mesh.add(engine);
         };
 
