@@ -18,6 +18,10 @@
     <script src="js/OrbitControls.js"></script>
     <div id="world"></div>
     <script>
+        var rotationX = 0,
+            rotationY = 0,
+            rotationZ = 0;
+
         function rotateAirPlaneLeftRight(A) {
             var geometry = airplane.mesh;
 
@@ -30,8 +34,8 @@
                 0, 0, 0, 1);
             //alert(gerHouse);
             if (geometry != undefined) {
-                geometry.applyMatrix(mRotate);
-
+                //geometry.applyMatrix(mRotate);
+                geometry.rotation.x += rotationX;
             }
         }
 
@@ -46,7 +50,8 @@
                 0, 0, 0, 1);
             //alert(gerHouse);
             if (geometry != undefined) {
-                geometry.applyMatrix(mRotate);
+                //geometry.applyMatrix(mRotate);
+                geometry.rotation.y += rotationY;
 
             }
         }
@@ -116,7 +121,7 @@
 
         function createPropeller() {
             // Создаем пропеллер
-            var geomPropeller = new THREE.BoxGeometry(20, 10, 10, 1, 1, 1);
+            var geomPropeller = new THREE.BoxGeometry(20, 8, 8, 1, 1, 1);
             var matPropeller = new THREE.MeshPhongMaterial({
                 color: Colors.brown,
                 shading: THREE.FlatShading
@@ -189,7 +194,7 @@
 
             this.mesh = new THREE.Object3D();
 
-            var geomCockpit = new THREE.BoxGeometry(200, 50, 50, 1, 1, 1);
+            var geomCockpit = new THREE.CylinderGeometry(30, 5, 200, 32);
             var matCockpit = new THREE.MeshPhongMaterial({
                 color: Colors.red,
                 shading: THREE.FlatShading
@@ -197,10 +202,11 @@
             var cockpit = new THREE.Mesh(geomCockpit, matCockpit);
             cockpit.castShadow = true;
             cockpit.receiveShadow = true;
+            cockpit.rotation.z += Math.PI / 2.0;
             this.mesh.add(cockpit);
 
             // Создаем двигатель
-            var geomEngine = new THREE.BoxGeometry(20, 50, 50, 1, 1, 1);
+            var geomEngine = new THREE.BoxGeometry(20, 40, 40, 1, 1, 1);
             var matEngine = new THREE.MeshPhongMaterial({
                 color: Colors.white,
                 shading: THREE.FlatShading
@@ -209,7 +215,7 @@
             engine.position.x = 110;
             engine.castShadow = true;
             engine.receiveShadow = true;
-            this.mesh.add(engine);
+            //this.mesh.add(engine);
 
             // Создаем хвост
             var geomTailPlane = new THREE.BoxGeometry(25, 40, 5, 1, 1, 1);
@@ -226,7 +232,7 @@
             // Создаем крыло
             var geomSideWing = new THREE.BoxGeometry(50, 8, 300, 1, 1, 1);
             var matSideWing = new THREE.MeshPhongMaterial({
-                color: Colors.red,
+                color: Colors.brown,
                 shading: THREE.FlatShading
             });
             var sideWing = new THREE.Mesh(geomSideWing, matSideWing);
@@ -235,6 +241,7 @@
             this.mesh.add(sideWing);
 
             this.propeller = new createPropeller().propeller;
+            this.propeller.position.x -= 10;
             this.mesh.add(this.propeller);
 
             this.leftPropeller = new createPropeller().propeller;
@@ -256,7 +263,7 @@
             cabin.castShadow = true;
             cabin.receiveShadow = true;
             cabin.position.set(40, 35, 0);
-            this.mesh.add(cabin);
+            //this.mesh.add(cabin);
         };
 
         var airplane;
@@ -273,10 +280,18 @@
             airplane.propeller.rotation.x += 0.3;
             airplane.leftPropeller.rotation.x += 0.3;
             airplane.rightPropeller.rotation.x += 0.3;
+            //airplane.mesh.rotation.x += rotationX;
+            //airplane.mesh.rotation.z += rotationY;
+            airplane.mesh.rotateX(rotationX);
+            airplane.mesh.rotateY(rotationY);
             // рендерим сцену
+
+            //rotateAirPlaneLeftRight(0);
+            //rotateAirPlaneTopDown(0);
             renderer.render(scene, camera);
 
             // снова вызываем фунцию loop
+
             requestAnimationFrame(loop);
         }
 
@@ -310,21 +325,48 @@
             switch (e.keyCode) {
 
                 case 37: // если нажата клавиша влево
-                    rotateAirPlaneLeftRight(-0.1);
+                    //rotateAirPlaneLeftRight(-0.05);
+                    rotationX = -0.05;
                     break;
                 case 38: // если нажата клавиша вверх
-                    rotateAirPlaneTopDown(0.1);
+                    //rotateAirPlaneTopDown(0.05);
+                    rotationY = 0.05;
                     break;
                 case 39: // если нажата клавиша вправо
-                    rotateAirPlaneLeftRight(0.1);
+                    //rotateAirPlaneLeftRight(0.05);
+                    rotationX = 0.05;
                     break;
                 case 40: // если нажата клавиша вниз
-                    rotateAirPlaneTopDown(-0.1);
+                    //rotateAirPlaneTopDown(-0.05);
+                    rotationY = -0.05;
+                    break;
+            }
+        }
+
+        function onKeyUp(e) {
+            switch (e.keyCode) {
+
+                case 37: // если нажата клавиша влево
+                    //rotateAirPlaneLeftRight(-0.05);
+                    rotationX = 0;
+                    break;
+                case 38: // если нажата клавиша вверх
+                    //rotateAirPlaneTopDown(0.05);
+                    rotationY = 0;
+                    break;
+                case 39: // если нажата клавиша вправо
+                    //rotateAirPlaneLeftRight(0.05);
+                    rotationX = 0;
+                    break;
+                case 40: // если нажата клавиша вниз
+                    //rotateAirPlaneTopDown(-0.05);
+                    rotationY = 0;
                     break;
             }
         }
 
         addEventListener("keydown", onKeyDown);
+        addEventListener("keyup", onKeyUp);
 
         init();
     </script>
