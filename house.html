@@ -145,8 +145,8 @@
 
             // Задайте разрешение теней,
             // но имейте ввиду, чем оно больше, тем ниже производительность.
-            shadowLight.shadow.mapSize.width = 2048;
-            shadowLight.shadow.mapSize.height = 2048;
+            shadowLight.shadow.mapSize.width = 2048 * 2;
+            shadowLight.shadow.mapSize.height = 2048 * 2;
 
             // Добавляем наше освещение на сцену
             scene.add(hemisphereLight);
@@ -157,25 +157,118 @@
 
             this.mesh = new THREE.Object3D();
 
-            var geomCockpit = new THREE.CylinderGeometry(30, 100, 100, 4);
-            var matCockpit = new THREE.MeshPhongMaterial({
+            var geomRoof = new THREE.CylinderGeometry(20, 100, 100, 4);
+            var matRoof = new THREE.MeshPhongMaterial({
                 color: Colors.red,
                 shading: THREE.FlatShading
             });
-            var cockpit = new THREE.Mesh(geomCockpit, matCockpit);
-            cockpit.castShadow = true;
-            cockpit.receiveShadow = true;
-            cockpit.position.y += 200;
-            cockpit.position.y += 200;
-            cockpit.rotation.y += Math.PI / 4.0;
-            this.mesh.add(cockpit);
+            var roof = new THREE.Mesh(geomRoof, matRoof);
+            roof.castShadow = true;
+            roof.receiveShadow = true;
+            roof.position.y += 100;
+            roof.rotation.y += Math.PI / 4.0;
+            this.mesh.add(roof);
+
+            var doorMaterials = [
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/door.jpg'),
+                    side: THREE.DoubleSide
+                }), //right
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/door.jpg'),
+                    side: THREE.DoubleSide
+                }), //left
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/door.jpg'),
+                    side: THREE.DoubleSide
+                }), //top
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/door.jpg'),
+                    side: THREE.DoubleSide
+                }), //bottom
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/door.jpg'),
+                    side: THREE.DoubleSide
+                }), //front
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/door.jpg'),
+                    side: THREE.DoubleSide
+                }) //back
+            ];
+
+            var geomDoor = new THREE.BoxGeometry(1, 60, 30, 1, 1, 1);
+            var matDoor = new THREE.MeshFaceMaterial(doorMaterials);
+            var door = new THREE.Mesh(geomDoor, matDoor);
+            door.castShadow = true;
+            door.receiveShadow = true;
+            door.position.x += 50;
+            door.position.y -= 18;
+            this.mesh.add(door);
+
+            var windowMaterials = [
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/window.jpg'),
+                    side: THREE.DoubleSide
+                }), //right
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/window.jpg'),
+                    side: THREE.DoubleSide
+                }), //left
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/window.jpg'),
+                    side: THREE.DoubleSide
+                }), //top
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/window.jpg'),
+                    side: THREE.DoubleSide
+                }), //bottom
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/window.jpg'),
+                    side: THREE.DoubleSide
+                }), //front
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/window.jpg'),
+                    side: THREE.DoubleSide
+                }) //back
+            ];
+
+            var geomWindow = new THREE.BoxGeometry(1, 30, 30, 1, 1, 1);
+            var windowMat = new THREE.MeshFaceMaterial(windowMaterials);
+            var window = new THREE.Mesh(geomWindow, windowMat);
+            window.position.z += 50;
+            window.rotation.y += Math.PI / 2;
+            this.mesh.add(window);
+
+            var cubeMaterials = [
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/brick.jpg'),
+                    side: THREE.DoubleSide
+                }), //right
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/brick.jpg'),
+                    side: THREE.DoubleSide
+                }), //left
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/brick.jpg'),
+                    side: THREE.DoubleSide
+                }), //top
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/brick.jpg'),
+                    side: THREE.DoubleSide
+                }), //bottom
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/brick.jpg'),
+                    side: THREE.DoubleSide
+                }), //front
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.TextureLoader().load('img/brick.jpg'),
+                    side: THREE.DoubleSide
+                }) //back
+            ];
 
             // Создаем стены
             var geomEngine = new THREE.BoxGeometry(100, 100, 100, 1, 1, 1);
-            var matEngine = new THREE.MeshPhongMaterial({
-                color: Colors.white,
-                shading: THREE.FlatShading
-            });
+            var matEngine = new THREE.MeshFaceMaterial(cubeMaterials);
             var engine = new THREE.Mesh(geomEngine, matEngine);
             engine.position.x = 0;
             engine.castShadow = true;
@@ -185,7 +278,7 @@
 
         var house;
 
-        function createPlane() {
+        function createHouse() {
             house = new house();
             house.mesh.scale.set(.25, .25, .25);
             house.mesh.position.set(0, 0, 0);
@@ -229,7 +322,7 @@
             createLights();
 
             // добавление объектов на сцену
-            createPlane();
+            createHouse();
 
             // запускаем цикл для обновления объектов на сцене
             // и перерасчет сцены в каждом кадре
